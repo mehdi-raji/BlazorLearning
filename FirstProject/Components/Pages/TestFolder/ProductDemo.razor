@@ -8,21 +8,22 @@
 			<h4>Product-@product.Id</h4>
 			Name - @product.Name <br/>
 			Price - @product.Price <br />
-			Show Properties : <input type="checkbox" @bind="ShowProperties[product.Id]"> <br />
-			@if (ShowProperties[product.Id])
+			Show Properties : <input type="checkbox" @bind="product.IsActive"> <br />
+			@if (product.IsActive)
 			{
 				foreach (var property in product.ProductProps)
 				{
 					<p>@property.Key: @property.Value</p>
 				}
 			}
+			<br/>
+			<input type="button" class="btn btn-danger" value="Delete">
 		</div>
 
 	}
 </div>
 @code {
 	List<Product> ProductList = new();
-	private Dictionary<int, bool> ShowProperties = new();
 	protected override void OnInitialized()
 	{
 		ProductList.Add(new Product
@@ -51,14 +52,6 @@
 				new() {Id = 3,Key = "Color",Value = "White"}
 			}
 		});
-		if (ProductList is not null)
-		{	
-			foreach (var product in ProductList)
-			{
-				ShowProperties.Add(product.Id,false);
-			}
-
-		}
 
 	}
 }
